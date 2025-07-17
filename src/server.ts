@@ -21,9 +21,9 @@ async function main() {
                 console.log('Connected to mongodb')
             })
 
-           
 
-      server =  app.listen(5000, () => {
+
+        server = app.listen(5000, () => {
             console.log(`This is running on the port ${envVars.PORT}`)
         })
     } catch (error) {
@@ -33,7 +33,7 @@ async function main() {
 
 
 
-( () =>{ 
+(() => {
     main()
     seedSuperAdmin()
 })();
@@ -141,6 +141,7 @@ GitHub - jaredhanson/passport: Simple, unobtrusive authentication f...
  * 1. npm i passport
  * 2. npm i passport-local
  * 3. npm i passport-google-oauth
+ * 4. npm i express-session
  * alsom types 
  * 1. npm i @types/passport @types/passport-local @types/passport-google-oauth2
  * }
@@ -148,6 +149,67 @@ GitHub - jaredhanson/passport: Simple, unobtrusive authentication f...
  * import passport and google auth where needed
  * 
  * ------------------------------------------Step --------------------3---------------------------
+ * -----import "./app/configue/passport" To import this file is crucial-গুরুত্বপূর্ণ  to set up the Google strategy and session handling.-----------------
+ * doc: https://www.passportjs.org/packages/passport-google-oauth2/
+ * app.use(session({secret: "secret",resave: false ,saveUninitialized: false ,})) in the app.ts
+ * saveUninitialized: false because not creating unneccessary records. It prevents empty session I mean অপ্রয়োজনীয় সেশন রেকর্ড তৈরি না করে মেমরি বা ডাটাবেসের ব্যবহার সংরক্ষণ করে।
+ * app.use(passport.initialize()), app.use(passport.session()) in the app.ts too
+ * 
+ *  ------------------------------------------Step ------------------   FOUR ---------------------------
+ * 1. CREATE PASSPORT JS FILE IN THE CONFIGUE FOLDER
+ * 2. import strategy from passport-google-oauth2
+ * 3. rename strategy as GoogleStrategy like: import { Strategy as GoogleStrategy} from "passport-google-oauth20"; 
  * 
  * 
+ * ------------------------------------------Step ------------------   5 ---------------------------
+ * 
+ * Go to google cloud console
+ * open nevigation bar from left side and click on APIS & SERVICE ON
+ * then click on the Oauth consent screen now click on the client and after that you can see your client if you created a project.
+ * but if you do not create can see the create project at the right side.
+ * 
+ * Now you have to use them in the passport.ts file
+ * 
+ * passport.use(new GoogleStrategy({
+    clientID:     GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://yourdomain:3000/auth/google/callback",
+    
+  } asynch(request, accessToken, refreshToken, profile, done:callback)=>{
+   tyrcatch(
+   
+   check if user has or if user email has
+
+   and after that create user and send it to db
+
+
+    ------------------------------------------Step ------------------   6 ---------------------------
+
+    passport.serializeUser
+    passport.deserializeUser
+
+
+ ------------------------------------------Step ------------------   6 ---------------------------
+
+    1. create a controller named getCallbackController in auth controller.ts
+
+const googleCallbackController = async (req: Request, res: Response, next: NextFunction) => {
+
+    const user = req.user;
+
+    console.log(user)
+
+    if (!user) {
+        throw new AppError(httpStatus.NOT_FOUND, "User not found")
+    }
+
+    const tokenInfo = createUserToken(user)
+
+    setAuthCookie(res, tokenInfo)
+
+    res.redirect(envVars.FRONTEND_URL)
+}
+
+   )
+  }, 
  */
