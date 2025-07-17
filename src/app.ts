@@ -7,15 +7,23 @@ import cookieParser from 'cookie-parser'
 import { notFound } from "./app/middleware/notFound"
 import { authRoutes } from "./app/auth/auth.router"
 import { globalErrorHandler } from "./app/middleware/globalErrHandler"
-
-
+import passport from "passport"
+import expressSession from "express-session"
+import "./app/configue/passport"
 
 
 export const app = express()
 
+app.use(expressSession({
+    secret: "my secret",
+    resave: false,
+    saveUninitialized: false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(express.json())
 app.use(cookieParser())
 app.use(cors())
-app.use(express.json())
 app.use('/api/v1/user/', UserRoutes)
 app.use('/api/v1/auth/', authRoutes)
 // app.use('/api/v1/user', UserRoutes)

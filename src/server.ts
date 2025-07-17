@@ -94,4 +94,60 @@ async function main() {
  * 5. and checkAuth will call like this router.patch('/:id', examAuth(...Object.values()), UserController.updateUser)
  * 
  * 
+ * How to find out google auth ---------------- with passport js
+ * 
+ *  https://dev.to/fatihguzel/integrating-google-oauth-20-with-jwt-in-a-nodejs-typescript-app-using-passportjs-3ij
+
+https://www.passportjs.org/tutorials/password/session/
+
+https://www.npmjs.com/package/passport
+
+https://stackoverflow.com/questions/46644366/what-is-passport-initialize-nodejs-express
+
+https://github.com/jaredhanson/passport
+
+https://github.com/jaredhanson/passport-local
+
+https://github.com/passport/todos-express-password
+
+https://github.com/jaredhanson/passport-google-oauth2
+
+https://github.com/passport/todos-express-google-oauth2
+DEV Community
+Integrating Google OAuth 2.0 with JWT in a Node.js + TypeScript App...
+Let’s cut to the chase—auth is a pain. And if you’ve ever used Passport.js, you know it’s not just a...
+Integrating Google OAuth 2.0 with JWT in a Node.js + TypeScript App...
+Passport.js
+Username & Password Tutorial: Establish Session
+In this tutorial you will build an Express app that lets users log in using a username and password.
+Username & Password Tutorial: Establish Session
+npm
+passport
+Simple, unobtrusive authentication for Node.js.. Latest version: 0.7.0, last published: 2 years ago. Start using passport in your project by running `npm i passport`. There are 6213 other projects in the npm registry using passport.
+Image
+GitHub
+GitHub - jaredhanson/passport: Simple, unobtrusive authentication f...
+Simple, unobtrusive authentication for Node.js. Contribute to jaredhanson/passport development by creating an account on GitHub.
+GitHub - jaredhanson/passport: Simple, unobtrusive authentication f...
+ * 
+ */
+
+
+/**
+ * Google login with passport js step by step
+ * 
+ * 1. Step-------
+ *  a. install neccesary npm package {
+ * 1. npm i passport
+ * 2. npm i passport-local
+ * 3. npm i passport-google-oauth
+ * alsom types 
+ * 1. npm i @types/passport @types/passport-local @types/passport-google-oauth2
+ * }
+ *  ------------------------------------------Step --------------------2---------------------------
+ * import passport and google auth where needed
+ * 
+ * ------------------------------------------Step --------------------3---------------------------
+ * 
+ * 
  */
