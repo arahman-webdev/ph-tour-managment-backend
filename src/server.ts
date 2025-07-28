@@ -38,6 +38,8 @@ async function main() {
     seedSuperAdmin()
 })();
 
+
+
 // process.on('unhandledRejection', error =>{
 //     console.log("unhandled rejection and it is shutting down", error)
 //     if(server){
@@ -213,3 +215,14 @@ const googleCallbackController = async (req: Request, res: Response, next: NextF
    )
   }, 
  */
+
+  /**
+   * Credential login with passport js--------------------------------------step by step
+   * 
+   * What need to create user 
+   * if == user?, if isGoogleAuthentictaed === user, password match with bcryptjs 
+   * passport.use({     usernameField: "email",
+     passwordField: "password"}, asynch(email, password, done )=>{
+        business logic
+     } )
+   */

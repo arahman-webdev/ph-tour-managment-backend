@@ -2,15 +2,15 @@
 /* eslint-disable no-unused-vars */
 import { NextFunction, Request, Response, Router } from "express";
 import { UserController } from "./user.controller";
-import { validateRequest } from "../middleware/validationRequest";
+import { validateRequest } from "../../middleware/validationRequest";
 import { userZodSchema } from "./user.validation";
 import  { JwtPayload } from "jsonwebtoken"
 
-import { verifyToken } from "../utils/jwt";
-import { envVars } from "../configue/env";
-import AppError from "../errorHelper/AppError";
+import { verifyToken } from "../../utils/jwt";
+import { envVars } from "../../configue/env";
+import AppError from "../../errorHelper/AppError";
 import { Role } from "./user.interface";
-import { checkAuth } from "../middleware/checkAuth";
+import { checkAuth } from "../../middleware/checkAuth";
 
 
 
@@ -18,7 +18,8 @@ import { checkAuth } from "../middleware/checkAuth";
 
 const router = Router()
 
-router.post('/register', validateRequest(userZodSchema), UserController.createUser,
+router.post('/register', validateRequest(userZodSchema), 
+UserController.createUser,
 )
 
 

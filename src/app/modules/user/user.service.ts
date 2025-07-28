@@ -1,6 +1,6 @@
 import { JwtPayload } from "jsonwebtoken";
-import { envVars } from "../configue/env";
-import AppError from "../errorHelper/AppError";
+import { envVars } from "../../configue/env";
+import AppError from "../../errorHelper/AppError";
 import { IAuthProvider, IUser, Role } from "./user.interface";
 import { User } from "./user.model";
 import bcrypt from "bcryptjs";
@@ -13,9 +13,9 @@ const createUserService = async (payload: Partial<IUser>) => {
 
     const isExistUser = await User.findOne({ email })
 
-    if (isExistUser) {
-        throw new AppError(statusCodes.BAD_REQUEST, "Email already existed")
-    }
+    // if (isExistUser) {
+    //     throw new AppError(statusCodes.BAD_REQUEST, "Email already existed")
+    // }
 
     // const salt = bcrypt.genSaltSync(10);
     const hashPassword = bcrypt.hashSync(password as string, Number(envVars.BCRYPT_SALT_ROUNDS));

@@ -3,9 +3,9 @@ import AppError from "../errorHelper/AppError";
 import { JwtPayload } from "jsonwebtoken";
 import { verifyToken } from "../utils/jwt";
 import { envVars } from "../configue/env";
-import { User } from "../user/user.model";
+import { User } from "../modules/user/user.model";
 import httpStatus from "http-status-codes"
-import { IsActive } from "../user/user.interface";
+import { IsActive } from "../modules/user/user.interface";
 // export const checkAuth = (...authRoles: string[]) => async (req: Request, res: Response, next: NextFunction) => {
 //     try {
 //         const token = req.headers.authorization;
@@ -69,8 +69,8 @@ export const checkAuth = (...authRoles: string[]) => async (req: Request, res: R
     }
 
     const verifiedToken = verifyToken(token, envVars.JWT_ACCESS_SECRET) as JwtPayload;
-    console.log("✅ Decoded Token:", verifiedToken);
-    console.log("✅ Required Roles:", authRoles);
+    // console.log("✅ Decoded Token:", verifiedToken);
+    // console.log("✅ Required Roles:", authRoles);
 
     const isUserExist = await User.findOne({ email: verifiedToken.userEmail });
 

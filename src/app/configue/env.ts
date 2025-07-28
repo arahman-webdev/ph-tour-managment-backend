@@ -19,12 +19,27 @@ interface EnvConfig {
     GOOGLE_CLIENT_SECRET: string,
     GOOGLE_CALLBACK_URL: string,
     EXPRESS_SESSION_SECRET: string,
-    FRONTEND_URL: string
+    FRONTEND_URL: string,
+    SSL: {
+        SSL_STORE_ID: string,
+        SSL_STORE_PASSWORD: string,
+        SSL_PAYMENT_URL: string,
+        SSL_VERIFY_URL: string,
+        SSL_SUCCESS_BACKEND_URL: string
+        SSL_FAIL_BACKEND_URL: string
+        SSL_CANCEL_BACKEND_URL: string
+        SSL_SUCCESS_FRONTEND_URL: string
+        SSL_FAIL_FRONTEND_URL: string
+        SSL_CANCEL_FRONTEND_URL: string
+    }
+
 }
 
 
+
+
 const loadEnvVariables = (): EnvConfig => {
-    const requiredEnvVariables: string[] = ["PORT", "DB_URL", "NODE_ENV", "BCRYPT_SALT_ROUNDS", "JWT_ACCESS_SECRET", "JWT_EXPIRATION", "SUPER_ADMIN_EMAIL", "SUPER_ADMIN_PASSWORD", "JWT_REFRESH_SECRET", "JWT_REFRESH_EXPIRATION", "GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "GOOGLE_CALLBACK_URL", "EXPRESS_SESSION_SECRET", "FRONTEND_URL"];
+    const requiredEnvVariables: string[] = ["PORT", "DB_URL", "NODE_ENV", "BCRYPT_SALT_ROUNDS", "JWT_ACCESS_SECRET", "JWT_EXPIRATION", "SUPER_ADMIN_EMAIL", "SUPER_ADMIN_PASSWORD", "JWT_REFRESH_SECRET", "JWT_REFRESH_EXPIRATION", "GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "GOOGLE_CALLBACK_URL", "EXPRESS_SESSION_SECRET", "FRONTEND_URL", "SSL_STORE_ID", "SSL_STORE_PASSWORD", "SSL_PAYMENT_URL", "SSL_VERIFY_URL", "SSL_SUCCESS_BACKEND_URL", "SSL_FAIL_BACKEND_URL", "SSL_CANCEL_BACKEND_URL", "SSL_SUCCESS_FRONTEND_URL","SSL_FAIL_FRONTEND_URL", "SSL_CANCEL_FRONTEND_URL"];
 
 
     requiredEnvVariables.forEach(key => {
@@ -48,16 +63,21 @@ const loadEnvVariables = (): EnvConfig => {
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET as string,
         GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL as string,
         EXPRESS_SESSION_SECRET: process.env.EXPRESS_SESSION_SECRET as string,
-        FRONTEND_URL: process.env.FRONTEND_URL as string
+        FRONTEND_URL: process.env.FRONTEND_URL as string,
+        SSL: {
+            SSL_STORE_ID: process.env.SSL_STORE_ID as string,
+            SSL_STORE_PASSWORD: process.env.SSL_STORE_PASSWORD as string,
+            SSL_PAYMENT_URL: process.env.SSL_PAYMENT_URL as string,
+            SSL_VERIFY_URL: process.env.SSL_VERIFY_URL as string,
+            SSL_SUCCESS_BACKEND_URL:process.env.SSL_SUCCESS_BACKEND_URL as string,
+            SSL_FAIL_BACKEND_URL: process.env.SSL_FAIL_BACKEND_URL as string,
+            SSL_CANCEL_BACKEND_URL: process.env.SSL_CANCEL_BACKEND_URL as string,
+            SSL_SUCCESS_FRONTEND_URL: process.env.SSL_SUCCESS_FRONTEND_URL as string,
+            SSL_FAIL_FRONTEND_URL: process.env.SSL_FAIL_FRONTEND_URL as string,
+            SSL_CANCEL_FRONTEND_URL: process.env.SL_CANCEL_FRONTEND_URL as string
+        }
+
     }
 }
 
-
 export const envVars = loadEnvVariables()
-
-/**
- * 
- * JWT_EXPIRATION
-JWT_SECRET
-BCRYPT_SALT_ROUNDS
- */

@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import {  IUser } from "../user/user.interface";
+// import {  IUser } from "../user/user.interface";
 import { User } from "../user/user.model";
 import bcryptjs from "bcryptjs";
-import AppError from "../errorHelper/AppError";
+import AppError from "../../errorHelper/AppError";
 import httpStatus from "http-status-codes"
-import {  createNewAccessTokenWithRefreshToken, createUserToken } from "../utils/usersTokens";
+import {  createNewAccessTokenWithRefreshToken} from "../../utils/usersTokens";
 import { JwtPayload } from "jsonwebtoken";
-import { envVars } from "../configue/env";
+import { envVars } from "../../configue/env";
 // import { generateToken, verifyToken } from "../utils/jwt";
 // import { envVars } from "../configue/env";
 // import { JwtPayload } from "jsonwebtoken";
@@ -16,52 +16,52 @@ import { envVars } from "../configue/env";
 
 
 
-const credentialsLoginService = async (payload: Partial<IUser>) => {
-    const { email, password } = payload;
+// const credentialsLoginService = async (payload: Partial<IUser>) => {
+//     const { email, password } = payload;
 
-    const isExistUser = await User.findOne({ email })
+//     const isExistUser = await User.findOne({ email })
 
-    if (!isExistUser) {
-        throw new Error("Email does not exist")
-    }
+//     if (!isExistUser) {
+//         throw new Error("Email does not exist")
+//     }
 
-    const isPasswordMatch = await bcryptjs.compare(password as string, isExistUser.password as string)
+//     const isPasswordMatch = await bcryptjs.compare(password as string, isExistUser.password as string)
 
-    if (!isPasswordMatch) {
-        throw new AppError(httpStatus.BAD_REQUEST, "Incorrect Password")
-    }
+//     if (!isPasswordMatch) {
+//         throw new AppError(httpStatus.BAD_REQUEST, "Incorrect Password")
+//     }
 
-    // const jwtPayload = {
-    //     userId: isExistUser._id,
-    //     userEmail: isExistUser.email,
-    //     userRole: isExistUser.role
-    // }
+//     // const jwtPayload = {
+//     //     userId: isExistUser._id,
+//     //     userEmail: isExistUser.email,
+//     //     userRole: isExistUser.role
+//     // }
 
-    // // const accessToken = jwt.sign(jwtPayload, "secret", {expiresIn: "1d"})
+//     // // const accessToken = jwt.sign(jwtPayload, "secret", {expiresIn: "1d"})
 
-    // const accessToken = generateToken(jwtPayload, envVars.JWT_ACCESS_SECRET, envVars.JWT_EXPIRATION);
+//     // const accessToken = generateToken(jwtPayload, envVars.JWT_ACCESS_SECRET, envVars.JWT_EXPIRATION);
 
-    // const refreshToken = generateToken(jwtPayload, envVars.JWT_REFRESH_SECRET, envVars.JWT_REFRESH_EXPIRATION);
-
-
-    const userToken = createUserToken(isExistUser)
+//     // const refreshToken = generateToken(jwtPayload, envVars.JWT_REFRESH_SECRET, envVars.JWT_REFRESH_EXPIRATION);
 
 
-    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-    const { password: pass, ...rest } = isExistUser.toObject()
+//     const userToken = createUserToken(isExistUser)
 
 
-
-    return {
-        accessToken: userToken.accessToken,
-        refreshToken: userToken.refreshToken,
-        user: rest
-
-    }
+//     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+//     const { password: pass, ...rest } = isExistUser.toObject()
 
 
 
-}
+//     return {
+//         accessToken: userToken.accessToken,
+//         refreshToken: userToken.refreshToken,
+//         user: rest
+
+//     }
+
+
+
+// }
 
 
 export const getNewAccessToken = async (refreshToken: string) => {
@@ -135,7 +135,7 @@ const resetNewPassword = async( oldPassword: string, newPassword: string, decode
 
 export const authService = {
 
-    credentialsLoginService,
+    // credentialsLoginService,
     getNewAccessToken,
     resetNewPassword
 }

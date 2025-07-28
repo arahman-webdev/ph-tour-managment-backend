@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { AuthControllers } from "./auth.controller";
-import { checkAuth } from "../middleware/checkAuth";
+import { checkAuth } from "../../middleware/checkAuth";
 import { Role } from "../user/user.interface";
 import passport from "passport";
 

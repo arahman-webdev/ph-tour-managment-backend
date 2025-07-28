@@ -1,15 +1,18 @@
 
 /* eslint-disable no-unused-vars */
 import express, { Request, Response } from "express"
-import { UserRoutes } from "./app/user/uesr.router"
+import { UserRoutes } from "./app/modules/user/uesr.router"
 import cors from "cors"
 import cookieParser from 'cookie-parser'
 import { notFound } from "./app/middleware/notFound"
-import { authRoutes } from "./app/auth/auth.router"
+import { authRoutes } from "./app/modules/auth/auth.router"
 import { globalErrorHandler } from "./app/middleware/globalErrHandler"
 import passport from "passport"
 import expressSession from "express-session"
 import "./app/configue/passport"
+import { tourRoutes } from "./app/modules/tour/tour.router"
+import { divisionRoutes } from "./app/modules/division/division.router"
+import { BookingRoutes } from "./app/modules/booking/booking.router"
 
 
 export const app = express()
@@ -26,6 +29,10 @@ app.use(cookieParser())
 app.use(cors())
 app.use('/api/v1/user/', UserRoutes)
 app.use('/api/v1/auth/', authRoutes)
+app.use('/api/v1/tour/', tourRoutes)
+app.use('/api/v1/division/', divisionRoutes)
+app.use('/api/v1/booking/' , BookingRoutes)
+
 // app.use('/api/v1/user', UserRoutes)
 
 
