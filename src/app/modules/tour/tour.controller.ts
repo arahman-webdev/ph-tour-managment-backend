@@ -12,12 +12,46 @@ const createTourType = async (req: Request, res: Response, next: NextFunction) =
         const newTourType = req.body
         const result = await tourService.createTourTypeService(newTourType)
 
-        
+
         res.json({
             statusCode: 201,
             success: true,
             message: 'Tour type created successfully',
             data: result,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+const getTourType = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+
+        const getTourType = await tourService.getTourTypeService()
+
+
+
+        res.json({
+            statusCode: 201,
+            success: true,
+            message: 'Tour type retrieved successfully',
+            data: getTourType,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+const deleteTourType = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const tourTypeId = req.params.id
+        await tourService.deleteTourTypeService(tourTypeId)
+
+        res.json({
+            statusCode: 201,
+            success: true,
+            message: 'Tour type deleted successfully',
+            data: null,
         })
     } catch (error) {
         next(error)
@@ -73,14 +107,14 @@ const getAllTours = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-const getSingleTour = async(req:Request, res:Response, next:NextFunction)=>{
+const getSingleTour = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const slug = req.params.slug;
 
         const tour = await tourService.getSingleTour(slug)
 
-   console.log(tour)
-    
+        console.log(tour)
+
         res.json({
             success: true,
             data: tour
@@ -101,5 +135,7 @@ export const tourController = {
     createTour,
     createTourType,
     getAllTours,
-    getSingleTour
+    getSingleTour,
+    getTourType,
+    deleteTourType
 }

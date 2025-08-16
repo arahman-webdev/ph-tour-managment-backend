@@ -13,6 +13,7 @@ import "./app/configue/passport"
 import { tourRoutes } from "./app/modules/tour/tour.router"
 import { divisionRoutes } from "./app/modules/division/division.router"
 import { BookingRoutes } from "./app/modules/booking/booking.router"
+import { OtpRoutes } from "./app/modules/otp/otp.router"
 
 
 export const app = express()
@@ -25,10 +26,15 @@ app.use(expressSession({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
-app.use(cors())
+app.use(cors({
+    origin: ['http://localhost:3000'],
+    credentials: true
+}))
 app.use('/api/v1/user/', UserRoutes)
 app.use('/api/v1/auth/', authRoutes)
+app.use('/api/v1/otp/', OtpRoutes)
 app.use('/api/v1/tour/', tourRoutes)
 app.use('/api/v1/division/', divisionRoutes)
 app.use('/api/v1/booking/' , BookingRoutes)

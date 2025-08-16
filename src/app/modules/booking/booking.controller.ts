@@ -23,18 +23,18 @@ const createBooking = async (req: Request, res: Response, next: NextFunction) =>
 }
 
 
-const getBooking = async (req: Request, res: Response, next: NextFunction) => {
+// const getBooking = async (req: Request, res: Response, next: NextFunction) => {
 
-    return {}
-}
+//     return {}
+// }
 
-const getBookingById = async (req: Request, res: Response, next: NextFunction) => {
+// const getBookingById = async (req: Request, res: Response, next: NextFunction) => {
 
-    return {}
-}
+//     return {}
+// }
 
 export const bookingController = {
     createBooking,
-    getBooking,
-    getBookingById
+    // getBooking,
+    // getBookingById
 }

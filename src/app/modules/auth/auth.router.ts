@@ -12,6 +12,7 @@ const router = Router()
 router.post('/login', AuthControllers.credentialsLogin)
 router.post('/refresh-token', AuthControllers.getNewAccessToken)
 router.post("/logout", AuthControllers.logoutUser)
+router.post("/forgot-password", AuthControllers.forgotPassword)
 router.post("/reset-password", checkAuth(...Object.values(Role)), AuthControllers.resetPassword)
 //  @typescript-eslint/no-unused-vars
 router.get('/google', async(req:Request, res:Response, next:NextFunction)=>{

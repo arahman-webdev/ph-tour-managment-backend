@@ -6,6 +6,7 @@ import { userSerivice } from "./user.service";
 import { JwtPayload } from "jsonwebtoken";
 import statusCode from "http-status-codes"
 
+
 /**
  * const createUser = async (req:Request, res:Response, next:NextFunction)=>{
     try {
@@ -48,7 +49,7 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
             data: newUser
         })
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
     } catch (err: any) {
         console.log(err)
         next(err)
@@ -90,10 +91,30 @@ const getAllUsers = async (req: Request, res: Response) => {
     }
 }
 
+
+const getSingleUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+    
+    const decodedToken = req.user as JwtPayload
+
+    const user = await userSerivice.getMeService(decodedToken.userId);
+
+        res.status(201).json({
+            success: true,
+            message: "User retrived successfully",
+            data: user
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+
 export const UserController = {
     createUser,
     getAllUsers,
-    updateUser
+    updateUser,
+    getSingleUser
 }
 
 

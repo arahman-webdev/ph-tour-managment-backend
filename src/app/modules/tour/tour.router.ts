@@ -9,6 +9,8 @@ const router = express.Router()
 /**-----------------------------------Tour Types---------------------------------- */
 
 router.post('/create-tour-type', checkAuth(Role.ADMIN, Role.SUPER_ADMIN), tourController.createTourType)
+router.get('/tour-type', checkAuth(Role.ADMIN, Role.SUPER_ADMIN), tourController.getTourType)
+router.delete('/:id', checkAuth(Role.ADMIN, Role.SUPER_ADMIN), tourController.deleteTourType)
 
 
 

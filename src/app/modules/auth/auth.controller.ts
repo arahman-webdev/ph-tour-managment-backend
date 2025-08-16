@@ -10,6 +10,7 @@ import { JwtPayload } from "jsonwebtoken";
 import { createUserToken } from "../../utils/usersTokens";
 import { envVars } from "../../configue/env";
 import passport from "passport";
+import { IsActive } from "../user/user.interface";
 
 
 
@@ -54,7 +55,6 @@ const credentialsLogin = async (req: Request, res: Response, next: NextFunction)
                 // throw new AppError(401, "Some error")
                 // next(err)
                 // return new AppError(401, err)
-
                 // ✅✅✅✅
                 // return next(err)
                 // console.log("from err");
@@ -64,7 +64,23 @@ const credentialsLogin = async (req: Request, res: Response, next: NextFunction)
             if (!user) {
                 // console.log("from !user");
                 // return new AppError(401, info.message)
-                 return next(new AppError(401, info?.message || "Authentication failed"));
+                return next(new AppError(401, info?.message || "Authentication failed"));
+            }
+
+            if (!user) {
+                throw new AppError(httpStatus.NOT_FOUND, "User does not exist");
+            }
+
+            if (!user.isVerified) {
+                throw new AppError(httpStatus.UNAUTHORIZED, "User is not verified")
+            }
+
+            if (user.isActive === IsActive.BLOCKED || user.isActive === IsActive.INACTIVE) {
+                throw new AppError(httpStatus.BAD_REQUEST, `User is ${user.isActive}`);
+            }
+
+            if (user.isDeleted) {
+                throw new AppError(httpStatus.BAD_REQUEST, "User is deleted");
             }
 
             // They are created in the auth.service.ts but this is coming from passport.ts and that's why it is being written here
@@ -162,17 +178,39 @@ const logoutUser = (req: Request, res: Response) => {
 
 
 
+// const resetPassword = async (req: Request, res: Response, next: NextFunction) => {
+
+//     console.log("request body", req.body)
+
+//     const newPassword = req.body.newPassword
+//     const oldPassword = req.body.oldPassword
+//     const decodedToken = req.user;
+
+//     await authService.resetNewPassword(oldPassword, newPassword, decodedToken as JwtPayload)
+
+
+
+//     res.status(httpStatus.OK).json({
+//         success: true,
+//         statusCode: httpStatus.OK,
+//         message: "Password Changed Successfully",
+//         data: null,
+//     })
+
+// }
+
+
+
 const resetPassword = async (req: Request, res: Response, next: NextFunction) => {
 
-    console.log("request body", req.body)
+    // console.log("request body", req.body)
 
-    const newPassword = req.body.newPassword
-    const oldPassword = req.body.oldPassword
+    const newPassword = req.body
     const decodedToken = req.user;
 
-    await authService.resetNewPassword(oldPassword, newPassword, decodedToken as JwtPayload)
+    console.log(newPassword, decodedToken)
 
-
+    await authService.resetPassword(newPassword, decodedToken as JwtPayload)
 
     res.status(httpStatus.OK).json({
         success: true,
@@ -180,6 +218,32 @@ const resetPassword = async (req: Request, res: Response, next: NextFunction) =>
         message: "Password Changed Successfully",
         data: null,
     })
+
+}
+
+
+const forgotPassword = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+
+        const email = req.body?.email; // safe access
+
+        if (!email) {
+            throw new AppError(httpStatus.BAD_REQUEST, "Email is required");
+        }
+
+        await authService.forgotPassword(email);
+
+        
+
+        res.status(httpStatus.OK).json({
+            success: true,
+            statusCode: httpStatus.OK,
+            message: "Email Sent Successfully",
+            data: null,
+        })
+    } catch (error) {
+        next(error)
+    }
 
 }
 
@@ -212,6 +276,6 @@ export const AuthControllers = {
     getNewAccessToken,
     logoutUser,
     resetPassword,
-    googleCallbackController
-
+    googleCallbackController,
+    forgotPassword
 }

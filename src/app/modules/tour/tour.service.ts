@@ -1,4 +1,5 @@
 
+import AppError from "../../errorHelper/AppError";
 import { queryBuilder } from "../../utils/QueryBuilder";
 import { ITour, ITourType } from "./tour.interface";
 import { Tour, TourType } from "./tour.model";
@@ -28,6 +29,25 @@ const createTourTypeService = async (payload: ITourType) => {
     // return await TourType.create(payload)
 }
 
+
+const getTourTypeService = async()=>{
+    const getTourType = await TourType.find()
+
+    return getTourType
+}
+
+
+const deleteTourTypeService = async(toruTypeId: string)=>{
+    const isExist = await TourType.findById(toruTypeId)
+
+    if(!isExist){
+        throw new AppError(404, "Tour type is not found")
+    }
+
+    const deleteType = await TourType.findByIdAndDelete(toruTypeId)
+
+    return deleteType
+}
 
 
 /*---------------------------------- Tyour   ------------------------------------- */
@@ -163,5 +183,7 @@ export const tourService = {
     createTourService,
     createTourTypeService,
     getAllTours,
-    getSingleTour
+    getSingleTour,
+    getTourTypeService,
+    deleteTourTypeService
 }

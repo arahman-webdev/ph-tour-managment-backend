@@ -16,11 +16,11 @@ import AppError from "../errorHelper/AppError";
 //             userEmail: user.email,
 //             userRole: user.role
 //         }
-    
+
 //         // const accessToken = jwt.sign(jwtPayload, "secret", {expiresIn: "1d"})
-    
+
 //         const accessToken = generateToken(jwtPayload, envVars.JWT_ACCESS_SECRET, envVars.JWT_EXPIRATION);
-    
+
 //         const refreshToken = generateToken(jwtPayload, envVars.JWT_REFRESH_SECRET, envVars.JWT_REFRESH_EXPIRATION);
 
 //         return {
@@ -30,7 +30,7 @@ import AppError from "../errorHelper/AppError";
 // }
 
 
-export const createUserToken = (user: Partial<IUser>) =>{
+export const createUserToken = (user: Partial<IUser>) => {
     const jwtPayload = {
         userId: user._id,
         userEmail: user.email,
@@ -50,21 +50,21 @@ export const createUserToken = (user: Partial<IUser>) =>{
 }
 
 
-export const createNewAccessTokenWithRefreshToken = async(refreshToken: string)=>{
+export const createNewAccessTokenWithRefreshToken = async (refreshToken: string) => {
 
     const verifiedRefreshToken = verifyToken(refreshToken, envVars.JWT_REFRESH_SECRET) as JwtPayload
 
-    const isExistUser = await User.findOne({email: verifiedRefreshToken.userEmail})
+    const isExistUser = await User.findOne({ email: verifiedRefreshToken.userEmail })
 
-    if(!isExistUser){
+    if (!isExistUser) {
         throw new AppError(httpStatus.NOT_FOUND, "Usre not found")
     }
 
-    if(isExistUser.isActive === IsActive.BLOCKED || isExistUser.isActive === IsActive.INACTIVE){
+    if (isExistUser.isActive === IsActive.BLOCKED || isExistUser.isActive === IsActive.INACTIVE) {
         throw new AppError(httpStatus.BAD_REQUEST, `User is ${isExistUser.isActive}`)
     }
 
-    if(isExistUser.isDeleted){
+    if (isExistUser.isDeleted) {
         throw new AppError(httpStatus.BAD_REQUEST, `User is deleted`)
     }
 

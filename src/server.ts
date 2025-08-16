@@ -6,6 +6,7 @@ import { app } from "./app"
 import { Server } from "http"
 import { envVars } from "./app/configue/env"
 import { seedSuperAdmin } from "./app/utils/seedSuperAdmin"
+import { connectRedis } from "./app/configue/redis.config"
 
 
 
@@ -33,9 +34,10 @@ async function main() {
 
 
 
-(() => {
-    main()
-    seedSuperAdmin()
+(async() => {
+   await connectRedis()
+   await main()
+   await seedSuperAdmin()
 })();
 
 
@@ -226,3 +228,16 @@ const googleCallbackController = async (req: Request, res: Response, next: NextF
         business logic
      } )
    */
+
+     /**
+      * To deploy on vercel ----------------------------------
+      * 
+      * npm run lint => check all of error
+      * vercel -v => to check version
+      * vercel login => to login with vercel 
+      * vercel --prod => to deploy on vercel
+      * 
+      * then set up and deploy => yes
+      * link to existing => no
+      * code located? enter
+      */

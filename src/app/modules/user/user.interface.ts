@@ -31,7 +31,7 @@ export interface IUser {
     address?:string,
     isActive?: IsActive,
     isVerified?: boolean,
-    isDeleted: boolean,
+    isDeleted?: boolean,
     auth: IAuthProvider[],
     booking?: Types.ObjectId[],
     guide?: Types.ObjectId[]

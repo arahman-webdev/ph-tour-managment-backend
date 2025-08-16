@@ -13,14 +13,14 @@ const createUserService = async (payload: Partial<IUser>) => {
 
     const isExistUser = await User.findOne({ email })
 
-    // if (isExistUser) {
-    //     throw new AppError(statusCodes.BAD_REQUEST, "Email already existed")
-    // }
+    if (isExistUser) {
+        throw new AppError(statusCodes.BAD_REQUEST, "Email already existed")
+    }
 
     // const salt = bcrypt.genSaltSync(10);
     const hashPassword = bcrypt.hashSync(password as string, Number(envVars.BCRYPT_SALT_ROUNDS));
 
-    console.log(password, hashPassword)
+
 
     const authProvider: IAuthProvider = { provider: "credentials", providerId: email as string }
 
@@ -84,13 +84,24 @@ const getAllUsers = async () => {
     return getUser
 }
 
+const getMeService = async(userId: string)=>{
 
+    const user = await User.findById(userId).select("-password")
+
+    if(!user){
+        throw new AppError(404, "User not found")
+    }
+
+    return user
+
+}
 
 
 
 export const userSerivice = {
     createUserService,
     getAllUsers,
-    updateUser
+    updateUser,
+    getMeService
 
 }
